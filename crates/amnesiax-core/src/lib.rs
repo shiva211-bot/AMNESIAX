@@ -54,10 +54,7 @@ pub fn decide_network_access(
 ///
 /// Unknown support or a caller-provided enabled flag is never enough on its
 /// own to advertise a capability as active.
-pub fn is_capability_confirmed_enabled(
-    status: CapabilityStatus,
-    enabled: bool,
-) -> bool {
+pub fn is_capability_confirmed_enabled(status: CapabilityStatus, enabled: bool) -> bool {
     status == CapabilityStatus::Supported && enabled
 }
 
@@ -93,19 +90,31 @@ mod tests {
             NetworkGuardState::Degraded,
             NetworkGuardState::Unknown,
         ] {
-            assert_eq!(
-                decide_network_access(false, state),
-                NetworkDecision::Allow
-            );
+            assert_eq!(decide_network_access(false, state), NetworkDecision::Allow);
         }
     }
 
     #[test]
     fn capability_requires_support_and_confirmation() {
-        assert!(is_capability_confirmed_enabled(CapabilityStatus::Supported, true));
-        assert!(!is_capability_confirmed_enabled(CapabilityStatus::Supported, false));
-        assert!(!is_capability_confirmed_enabled(CapabilityStatus::Unsupported, true));
-        assert!(!is_capability_confirmed_enabled(CapabilityStatus::Unknown, true));
-        assert!(!is_capability_confirmed_enabled(CapabilityStatus::Unknown, false));
+        assert!(is_capability_confirmed_enabled(
+            CapabilityStatus::Supported,
+            true
+        ));
+        assert!(!is_capability_confirmed_enabled(
+            CapabilityStatus::Supported,
+            false
+        ));
+        assert!(!is_capability_confirmed_enabled(
+            CapabilityStatus::Unsupported,
+            true
+        ));
+        assert!(!is_capability_confirmed_enabled(
+            CapabilityStatus::Unknown,
+            true
+        ));
+        assert!(!is_capability_confirmed_enabled(
+            CapabilityStatus::Unknown,
+            false
+        ));
     }
 }
