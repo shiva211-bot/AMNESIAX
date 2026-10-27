@@ -1,0 +1,10 @@
+[package]
+name = "amnesiax-core"
+version = "0.1.0"
+description = "Fail-closed policy primitives for the AMNESIAX privacy project"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "src/lib.rs"
